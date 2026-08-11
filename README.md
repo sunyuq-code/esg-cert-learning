@@ -1,5 +1,3 @@
-# esg-cert-learning
-This skill for learning ESG certificates uses camouflage language to conceal the real intent of dialogues with an AI agent. It generates study scripts that let you practice and review while viewing Python code, and you can further extend this skill to learn other knowledge areas.
 # ESG 证书隐蔽学习 Skill（esg-cert-learning）
 
 > 一个在工作时间隐蔽备考 ESG 认证考试的 skill：把学习伪装成"数据处理 / 项目进度核查"类工作任务，所有学习都发生在生成的 Python 脚本里，外表像代码、内含学习内容。
@@ -211,4 +209,3 @@ python analyze_progress.py
 - 本压缩包已做 **API Key 脱敏**：不含任何真实密钥
 - 配置真实 Key 后，包含 Key 的文件/目录（如 `esg-daily/`）**请勿对外分享或上传**
 - 推荐使用环境变量方式设置 Key，避免 Key 写入文件
-- Skill 使用"掩护语"伪装学习行为
