@@ -22,7 +22,8 @@ esg-cert-learning/
     ├── question_rules.py             # 规则引擎（四因子评分 + 权威 74-KP 表）
     ├── generate_questions.py         # DeepSeek 题库生成器
     ├── fix_questions.py              # DeepSeek 重复题目修复工具
-    ├── generate_explanations.py      # DeepSeek 题目解析生成器
+    ├── generate_explanations.py      # DeepSeek 数据说明生成器
+    ├── enrich_knowledge_base.py     # DeepSeek 知识库内容丰富(首次构建必跑)
     ├── progress_store.py             # 学习进度存储 + 智能选题
     ├── analyze_progress.py           # HTML 学习分析报告生成器
     ├── test_skill.py                 # 测试套件（71 项，离线可用）
@@ -60,7 +61,7 @@ python references/sample_study.py quiz
 | 阶段 | 内容 | 说明 |
 |---|---|---|
 | Phase 0 | 证书设置 | 填写证书名称与级别 |
-| Phase 1 | 知识库与题库 | 自动构建 74 知识点 + 603 题 |
+| Phase 1 | 知识库与题库 | 构建知识库后运行 enrich_knowledge_base.py 丰富内容, 再生成题库 |
 | Phase 2 | 掩护语定制 | 可自定义触发词（默认 6 条） |
 | Phase 3 | 每日学习量 | 默认 10 知识点 + 10 题 + 1 案例 |
 | Phase 4 | **DeepSeek API Key** | **首次使用必须提供**（本压缩包已脱敏，不含任何真实 Key） |
@@ -170,7 +171,8 @@ python analyze_progress.py
 |---|---|---|
 | 题库生成 | `python generate_questions.py --generate` | 按 v3.0 规则调用 DeepSeek 补齐缺失题目 |
 | 重复修复 | `python fix_questions.py --fix` | 检测同知识点同题型重复题，DeepSeek 改写为反例/对比/场景/因果题 |
-| 解析补齐 | `python generate_explanations.py --generate` | 为解析缺失/过短的题目调用 DeepSeek 生成解析 |
+| 解析补齐 | `python generate_explanations.py --generate` | 为说明缺失/过短的样本调用 DeepSeek 生成说明 |
+| 知识库丰富 | `python enrich_knowledge_base.py` | **首次构建知识库后必跑**：为每个知识点生成 300-500 字详细说明 |
 | 全套测试 | `python test_skill.py` | 71 项自动化测试（数据完整性/题库结构/规则合规/引擎/生成/修复/进度） |
 | 测试+自动修复 | `python test_skill.py --fix` | 测试发现重复题后自动调用修复工具 |
 
@@ -197,7 +199,9 @@ python analyze_progress.py
 **实际使用 skill 时**：
 1. skill 首次初始化（Phase 1）会**检测到示例数据标记并排除**
 2. 根据你选择的证书考试大纲**重新构建知识库**（联网搜索官方考纲）
-3. 按 `references/question_generation_rules.md`（v3.0 量化规则）
+3. **运行 `python enrich_knowledge_base.py` 丰富知识点内容**（DeepSeek 为每个知识点
+   生成 300-500 字详细说明，覆盖定义/范围/方法/标准/最佳实践/误区）
+4. 按 `references/question_generation_rules.md`（v3.0 量化规则）
    **重新生成题库**（每知识点4-12题，4种题型保底）
 
 示例数据与真实题库互不干扰，请勿将示例数据当作真实考试内容使用。
